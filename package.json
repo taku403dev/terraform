@@ -1,0 +1,24 @@
+{
+  "name": "terraform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix": "haskey"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taku403dev/terraform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taku403dev/terraform/issues"
+  },
+  "homepage": "https://github.com/taku403dev/terraform#readme",
+  "devDependencies": {
+    "haskey": "^0.1.4"
+  }
+}
