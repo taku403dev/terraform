@@ -22,3 +22,16 @@ resource "aws_db_option_group" "mysql_standalone_optiongroup" {
   major_engine_version = "8.0"
 }
 
+resource "aws_db_subnet_group" "mysql_standalone_group" {
+  name = "${var.project}-${var.enviroment}-mysql-standalone-group"
+  subnet_ids = [
+    aws_subnet.private_subnet_1a.id,
+    aws_subnet.private_subnet_1c.id
+  ]
+  tags = {
+    Name    = "${var.project}-${var.enviroment}-mysql-standalone-subnetgroup"
+    Project = var.project
+    Env     = var.enviroment
+  }
+
+}
