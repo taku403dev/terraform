@@ -7,6 +7,15 @@ terraform {
       version = "~>3.0"
     }
   }
+
+  # ローカル環境下に存在するterraform.tfstateを
+  # 下記s3バケットに保存先を変更
+  backend "s3" {
+    bucket  = "tastylog-tfstate-bucket-takurou403"
+    key     = "tastylog-dev.tfstate"
+    region  = "ap-northeast-1"
+    profile = "terraform"
+  }
 }
 # provider設定
 provider "aws" {
