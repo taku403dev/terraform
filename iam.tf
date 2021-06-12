@@ -1,0 +1,14 @@
+# IAM configration
+
+# IAM Role 信頼ポリシー
+data "aws_iam_policy_document" "ec2_assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type = "Service"
+      identifiers = [
+        "ec2.amazonaws.com"
+      ]
+    }
+  }
+}
