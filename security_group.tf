@@ -1,4 +1,4 @@
-# セキュリティグループリソース設定
+# セキュリティグループ設定
 
 resource "aws_security_group" "web_sg" {
 

@@ -1,4 +1,4 @@
-# VPCリソース設定
+# VPCネットワーク設定
 resource "aws_vpc" "vpc" {
   cidr_block                       = "192.168.0.0/20"
   instance_tenancy                 = "default"
@@ -13,7 +13,7 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-# Subnetリソース設定
+# サブネット設定
 resource "aws_subnet" "public_subnet_1a" {
   vpc_id                  = aws_vpc.vpc.id
   availability_zone       = "ap-northeast-1a"
@@ -69,7 +69,7 @@ resource "aws_subnet" "private_subnet_1c" {
   }
 }
 
-# route tableリソース設定
+# ルートテーブル設定
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.vpc.id
   tags = {
@@ -88,7 +88,7 @@ resource "aws_route_table" "private_rt" {
     Type    = "public"
   }
 }
-# route table 関連付けリソース設定
+# ルートテーブル関連付け設定
 resource "aws_route_table_association" "public_rt_1a" {
   route_table_id = aws_route_table.public_rt.id
   subnet_id      = aws_subnet.public_subnet_1a.id
@@ -106,7 +106,7 @@ resource "aws_route_table_association" "private_rt_1c" {
   subnet_id      = aws_subnet.private_subnet_1c.id
 }
 
-# Internet Gatewayリソース定義の設定
+# インターネットゲートウェイ設定
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
@@ -121,4 +121,10 @@ resource "aws_route" "public_rt_igw_r" {
   route_table_id         = aws_route_table.public_rt.id
   gateway_id             = aws_internet_gateway.igw.id
   destination_cidr_block = "0.0.0.0/0"
+}
+
+# ランダム文字列生成設定
+resource "random_string" "db_password" {
+  length  = 16
+  special = false
 }
