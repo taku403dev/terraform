@@ -1,5 +1,4 @@
-# RDSパラメータグループ設定
-
+# rds parameter group
 resource "aws_db_parameter_group" "mysql_standalone_parametergroup" {
   name   = "${var.project}-${var.enviroment}-mysql-standalone-parametergroup"
   family = "mysql8.0"
@@ -14,14 +13,14 @@ resource "aws_db_parameter_group" "mysql_standalone_parametergroup" {
   }
 }
 
-# RDSオプショングループ設定
-
+# rds option group
 resource "aws_db_option_group" "mysql_standalone_optiongroup" {
   name                 = "${var.project}-${var.enviroment}-mysql-standalone-optiongroup"
   engine_name          = "mysql"
   major_engine_version = "8.0"
 }
 
+# rds subnet group
 resource "aws_db_subnet_group" "mysql_standalone_subnetgroup" {
   name = "${var.project}-${var.enviroment}-mysql-standalone-group"
   subnet_ids = [
@@ -36,7 +35,7 @@ resource "aws_db_subnet_group" "mysql_standalone_subnetgroup" {
 
 }
 
-# RDSインスタンス設定
+# rds instance
 resource "aws_db_instance" "mysql_standalone" {
   engine         = "mysql"
   engine_version = "8.0.20"
