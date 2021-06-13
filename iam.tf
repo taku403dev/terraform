@@ -1,5 +1,11 @@
 # IAM configration
 
+# IAM Instance profile
+# 作成したロールとEC2インスタンスの紐付け
+resource "aws_iam_instance_profile" "app_ec2_instance_profile" {
+  name = aws_iam_role.app_iam_role.name
+  role = aws_iam_role.app_iam_role.name
+}
 # IAM Role
 resource "aws_iam_role" "app_iam_role" {
   name = "${var.project}-${var.enviroment}-app-iam-role"
