@@ -1,4 +1,4 @@
-# terraform 基本設定
+# terraform configration
 terraform {
   required_version = ">=0.13"
   required_providers {
@@ -34,5 +34,22 @@ variable "project" {
 
 # 環境変数の定義
 variable "enviroment" {
+  type = string
+}
+
+# Route53 domain
+variable "domain" {
+  type = string
+}
+
+variable "app_port" {
+  type = string
+}
+
+variable "db_port" {
+  type = string
+}
+
+variable "web_port" {
   type = string
 }

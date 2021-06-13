@@ -13,12 +13,12 @@ resource "aws_security_group" "web_sg" {
 
 }
 
-resource "aws_security_group_rule" "web_in_http" {
+resource "aws_security_group_rule" "web_in_web_port" {
   security_group_id = aws_security_group.web_sg.id
   type              = "ingress"
   protocol          = "tcp"
-  from_port         = 80
-  to_port           = 80
+  from_port         = var.web_port
+  to_port           = var.web_port
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
@@ -30,15 +30,17 @@ resource "aws_security_group_rule" "web_in_https" {
   to_port           = 443
   cidr_blocks       = ["0.0.0.0/0"]
 }
-resource "aws_security_group_rule" "web_out_3000" {
+# アウトバウンド: tcp/http: to app server
+resource "aws_security_group_rule" "web_out_app_port" {
   security_group_id        = aws_security_group.web_sg.id
   type                     = "egress"
   protocol                 = "tcp"
-  from_port                = 3000
-  to_port                  = 3000
+  from_port                = var.app_port
+  to_port                  = var.app_port
   source_security_group_id = aws_security_group.app_sg.id
 
 }
+# application security group
 resource "aws_security_group" "app_sg" {
 
   name        = "${var.project}-${var.enviroment}-app-sg"
@@ -52,12 +54,13 @@ resource "aws_security_group" "app_sg" {
 
 }
 
-resource "aws_security_group_rule" "app_in_tcp3000" {
+# インバウンド: tcp/http: in app server
+resource "aws_security_group_rule" "app_in_app_port" {
   security_group_id        = aws_security_group.app_sg.id
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = 3000
-  to_port                  = 3000
+  from_port                = var.app_port
+  to_port                  = var.app_port
   source_security_group_id = aws_security_group.web_sg.id
 }
 
@@ -65,8 +68,8 @@ resource "aws_security_group_rule" "app_out_http" {
   security_group_id = aws_security_group.app_sg.id
   type              = "egress"
   protocol          = "tcp"
-  from_port         = 80
-  to_port           = 80
+  from_port         = var.web_port
+  to_port           = var.web_port
   prefix_list_ids   = [data.aws_prefix_list.s3_p1.id]
 }
 
@@ -83,11 +86,12 @@ resource "aws_security_group_rule" "app_out_db" {
   security_group_id        = aws_security_group.app_sg.id
   type                     = "egress"
   protocol                 = "tcp"
-  from_port                = 3306
-  to_port                  = 3306
+  from_port                = var.db_port
+  to_port                  = var.db_port
   source_security_group_id = aws_security_group.db_sg.id
 }
 
+# Operation manager security group
 resource "aws_security_group" "opmg_sg" {
 
   name        = "${var.project}-${var.enviroment}-opmg-sg"
@@ -110,21 +114,21 @@ resource "aws_security_group_rule" "opmg_in_ssh" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "opmg_in_3000" {
+resource "aws_security_group_rule" "opmg_in_app_port" {
   security_group_id = aws_security_group.opmg_sg.id
   type              = "ingress"
   protocol          = "tcp"
-  from_port         = 3000
-  to_port           = 3000
+  from_port         = var.app_port
+  to_port           = var.app_port
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "opmg_out_http" {
+resource "aws_security_group_rule" "opmg_out_web_port" {
   security_group_id = aws_security_group.opmg_sg.id
   type              = "egress"
   protocol          = "tcp"
-  from_port         = 80
-  to_port           = 80
+  from_port         = var.web_port
+  to_port           = var.web_port
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
@@ -138,7 +142,7 @@ resource "aws_security_group_rule" "opmg_out_https" {
 }
 
 
-
+# Database security group configration
 resource "aws_security_group" "db_sg" {
   name        = "${var.project}-${var.enviroment}-db-sg"
   description = "database front role security group"
@@ -151,12 +155,13 @@ resource "aws_security_group" "db_sg" {
 
 }
 
-resource "aws_security_group_rule" "db_in_3306" {
+# inbound database port
+resource "aws_security_group_rule" "db_in_db_port" {
   security_group_id        = aws_security_group.db_sg.id
   type                     = "ingress"
   protocol                 = "tcp"
-  from_port                = 3306
-  to_port                  = 3306
+  from_port                = var.db_port
+  to_port                  = var.db_port
   source_security_group_id = aws_security_group.app_sg.id
 }
 
