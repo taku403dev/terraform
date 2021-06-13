@@ -123,9 +123,3 @@ resource "aws_route" "public_rt_igw_r" {
   gateway_id             = aws_internet_gateway.igw.id
   destination_cidr_block = "0.0.0.0/0"
 }
-
-# random string 
-resource "random_string" "db_password" {
-  length  = 16
-  special = false
-}

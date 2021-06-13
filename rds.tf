@@ -1,3 +1,8 @@
+# random string 
+resource "random_string" "db_password" {
+  length  = 16
+  special = false
+}
 # rds parameter group
 resource "aws_db_parameter_group" "mysql_standalone_parametergroup" {
   name   = "${var.project}-${var.enviroment}-mysql-standalone-parametergroup"
