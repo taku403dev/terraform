@@ -1,11 +1,14 @@
 init:
 	curl https://www.toptal.com/developers/gitignore/api/terraform > .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
+	&& echo 'src/' >> .gitignore \
+	&& mkdir -p tmp/log
 	&& terraform init
 
 gitignore:
 	curl https://www.toptal.com/developers/gitignore/api/terraform  > .gitignore \
-	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore
+	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
+	&& echo 'src/' >> .gitignore
 
 run-deploy:
 	terraform fmt \
