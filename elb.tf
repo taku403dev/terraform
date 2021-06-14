@@ -13,7 +13,7 @@ resource "aws_lb" "alb" {
 }
 
 # target group
-resource "aws_alb_target_group" "alb_target_group" {
+resource "aws_lb_target_group" "alb_target_group" {
   name     = "${var.project}-${var.enviroment}-app-tg"
   port     = var.app_port
   protocol = "HTTP"
@@ -32,12 +32,12 @@ resource "aws_lb_listener" "alb_listener_http" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.alb_target_group.arn
+    target_group_arn = aws_lb_target_group.alb_target_group.arn
   }
 }
 
 # ターゲットグループとEC2インスタンスの紐付け
 resource "aws_lb_target_group_attachment" "instance" {
-  target_group_arn = aws_alb_target_group.alb_target_group.arn
+  target_group_arn = aws_lb_target_group.alb_target_group.arn
   target_id        = aws_instance.app_server.id
 }
