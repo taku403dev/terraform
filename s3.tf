@@ -12,7 +12,7 @@ resource "random_string" "s3_unique_key" {
 
 # S3 static bucket
 resource "aws_s3_bucket" "s3_static_bucket" {
-  bucket = "${var.project}-${var.enviroment}-static_bucket-${random_string.s3_unique_key.result}"
+  bucket = "${var.project}-${var.enviroment}-static-bucket-${random_string.s3_unique_key.result}"
   versioning {
     enabled = false
   }
@@ -52,7 +52,7 @@ resource "aws_s3_bucket_policy" "s3_static_bucket" {
 
 # S3 deploy bucket
 resource "aws_s3_bucket" "s3_deploy_bucket" {
-  bucket = "${var.project}-${var.enviroment}-deploy_bucket-${random_string.s3_unique_key.result}"
+  bucket = "${var.project}-${var.enviroment}-deploy-bucket-${random_string.s3_unique_key.result}"
   versioning {
     enabled = false
   }
