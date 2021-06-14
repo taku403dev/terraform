@@ -1,13 +1,12 @@
-# ACM
+# Certificate
 
+# for tokyo region
 resource "aws_acm_certificate" "tokyo_cert" {
   domain_name       = "*.${var.domain}"
   validation_method = "DNS"
 
   tags = {
-    Name    = "${var.project}-${var.enviroment}-wildcard-sslcert"
-    Project = var.project
-    ENV     = var.enviroment
+    Name = "${var.project}-${var.enviroment}-wildcard-sslcert"
   }
   lifecycle {
     create_before_destroy = true
@@ -29,7 +28,7 @@ resource "aws_route53_record" "route53_acm_dns_resolve" {
   }
 
   allow_overwrite = true
-  zone_id         = aws_route53_zone.route53_zone.id
+  zone_id         = aws_route53_zone.route53_zone.zone_id
   name            = each.value.name
   type            = each.value.type
   ttl             = 600
