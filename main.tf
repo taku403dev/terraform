@@ -23,6 +23,12 @@ provider "aws" {
   region  = "ap-northeast-1"
 }
 
+provider "aws" {
+  alias   = "virginiga"
+  profile = "terraform"
+  region  = "us-east-1"
+}
+
 
 # 外部変数はterraform.tfvarsに定義されている
 # 下記は型定義のみ設定
