@@ -1,8 +1,10 @@
 init:
+	
 	curl https://www.toptal.com/developers/gitignore/api/terraform > .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/yarn >> .gitignore \
 	&& echo 'src/' >> .gitignore \
+	&& echo '.envrc' >> .gitignore \
 	&& mkdir -p tmp/log
 	&& terraform init
 
@@ -10,6 +12,7 @@ gitignore:
 	curl https://www.toptal.com/developers/gitignore/api/terraform  > .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/yarn >> .gitignore \
+	&& echo '.envrc' >> .gitignore \
 	&& echo 'src/' >> .gitignore
 
 run-deploy:

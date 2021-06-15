@@ -167,3 +167,4 @@ temp/
 
 *.dot
 src/
+.envrc
