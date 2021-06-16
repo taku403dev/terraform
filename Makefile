@@ -1,19 +1,21 @@
 init:
-	
 	curl https://www.toptal.com/developers/gitignore/api/terraform > .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/yarn >> .gitignore \
 	&& echo 'src/' >> .gitignore \
+	&& echo '.tfenv/' >> .gitignore \
 	&& echo '.envrc' >> .gitignore \
-	&& mkdir -p tmp/log
-	&& terraform init
+	&& mkdir -p tmp/log \
+	&& mkdir src \
+	&& tfenv install
 
 gitignore:
 	curl https://www.toptal.com/developers/gitignore/api/terraform  > .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/node >> .gitignore \
 	&& curl https://www.toptal.com/developers/gitignore/api/yarn >> .gitignore \
-	&& echo '.envrc' >> .gitignore \
-	&& echo 'src/' >> .gitignore
+	&& echo 'src/' >> .gitignore \
+	&& echo '.tfenv/' >> .gitignore \
+	&& echo '.envrc' >> .gitignore
 
 run-deploy:
 	terraform fmt \
